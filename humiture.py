@@ -138,7 +138,8 @@ def main():
         if result:
             humidity, temperature = result
             utc_now = datetime.utcnow()
-            mqtt_msg = json.dumps({"utc_time": utc_now, "location":"...", "humidity": humidity,"temperature":  temperature}, default=json_serial)
+            location = "..."
+            mqtt_msg = json.dumps({"utc_time": utc_now, "location": location, "humidity": humidity,"temperature":  temperature}, default=json_serial)
             mqtt_topic = "rpi/humiture"
             client.publish(mqtt_topic, mqtt_msg)
             print ("%s UTC - %s - humidity: %s %%,  Temperature: %s C" % (utc_now, location, humidity, temperature))
