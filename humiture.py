@@ -28,10 +28,11 @@ mqttBroker ="mqtt.domain.tld"
 
 client = mqtt.Client("RPi_Weather_Station")
 mqtt_port = 8883
+keepalive = 60
 client.username_pw_set("user", "password")
 client.tls_set(cert_reqs=ssl.CERT_NONE)
 client.tls_insecure_set(True)
-client.connect(mqttBroker, mqtt_port)
+client.connect(mqttBroker, mqtt_port, keepalive)
 
 def read_dht11_dat():
     GPIO.setup(DHTPIN, GPIO.OUT)
