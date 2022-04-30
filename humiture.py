@@ -124,6 +124,13 @@ def read_dht11_dat():
 
     return the_bytes[0], the_bytes[2]
 
+def json_serial(obj):
+    """JSON serializer for objects not serializable by default json code"""
+
+    if isinstance(obj, (datetime)):
+        return obj.isoformat()
+    raise TypeError ("Type %s not serializable" % type(obj))
+
 def main():
     print ("Raspberry Pi wiringPi DHT11 Temperature test program\n")
     while True:
@@ -131,10 +138,10 @@ def main():
         if result:
             humidity, temperature = result
             utc_now = datetime.utcnow()
-            mqtt_msg = json.dumps({"utc_time": utc_now, "humidity": humidiy,"temperature":  temperature})
+            mqtt_msg = json.dumps({"utc_time": utc_now, "humidity": humidity,"temperature":  temperature}, default=json_serial)
             mqtt_topic = "rpi/humiture"
             client.publish(mqtt_topic, mqtt_msg)
-            print ("humidity: %s %%,  Temperature: %s C`" % (humidity, temperature))
+            print ("%s UTC - humidity: %s %%,  Temperature: %s C" % (utc_now, humidity, temperature))
         time.sleep(1)
 
 def destroy():
