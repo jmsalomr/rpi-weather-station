@@ -142,7 +142,7 @@ def main():
             mqtt_msg = json.dumps({"utc_time": utc_now, "location": location, "humidity": humidity,"temperature":  temperature}, default=json_serial)
             mqtt_topic = "rpi/humiture"
             client.publish(mqtt_topic, mqtt_msg)
-            print ("%s UTC - %s - humidity: %s %%,  Temperature: %s C" % (utc_now, location, humidity, temperature))
+            print ("%s UTC - %s - humidity: %s %%, Temperature: %s C" % (utc_now, location, humidity, temperature))
         time.sleep(1)
 
 def destroy():
